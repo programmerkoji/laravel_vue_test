@@ -15,11 +15,11 @@
 
 ## ディレクトリ構成（例）
 
-project-root/
-├── backend/ # Laravelアプリ
-├── frontend/ # Vue 3 アプリ
-├── docker-compose.yml
-└── README.md
+project-root/<br/>
+┣ backend/ # Laravelアプリ<br/>
+┣ frontend/ # Vue 3 アプリ<br/>
+┣ docker-compose.yml<br/>
+┗ README.md<br/>
 
 ---
 
