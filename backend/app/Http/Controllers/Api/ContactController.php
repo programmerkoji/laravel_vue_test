@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Services\ContactService;
+use Illuminate\Http\Request;
 
 class ContactController extends Controller
 {
@@ -27,9 +28,16 @@ class ContactController extends Controller
             'message' => 'required',
         ]);
 
-        $contact = $this->service->create($validated);
+        try {
+            $contact = $this->service->create($validated);
+            return response()->json($contact, 201);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => '登録処理中にエラーが発生しました。',
+                'message' => $e->getMessage()
+            ], 500);
+        }
 
-        return response()->json($contact, 201);
     }
 
     public function update(Request $request, $id)
@@ -40,7 +48,16 @@ class ContactController extends Controller
             'message' => 'required',
         ]);
 
-        return response()->json($this->service->update($id, $validated));
+        try {
+            $contact = $this->service->update($id, $validated);
+            return response()->json($contact, 201);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => '登録処理中にエラーが発生しました。',
+                'message' => $e->getMessage()
+            ], 500);
+        }
+
     }
 
     public function destroy($id)
