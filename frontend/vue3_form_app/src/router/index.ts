@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import ContactList from '@/pages/ContactList.vue'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -7,13 +6,8 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: ContactList
+      component: () => import('../pages/ContactListPage.vue')
     },
-    {
-      path: '/about',
-      name: 'about',
-      component: () => import('../views/AboutView.vue')
-    }
   ]
 })
 
