@@ -70,10 +70,10 @@ const handleSubmit = async () => {
           </label>
         </div>
         <div class="flex justify-center items-center gap-6 py-10">
-          <RouterLink
+          <router-link
             to="/"
             class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
-            >戻る</RouterLink
+            >戻る</router-link
           >
           <button
             type="submit"

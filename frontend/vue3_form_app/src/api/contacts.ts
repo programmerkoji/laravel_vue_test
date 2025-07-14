@@ -6,6 +6,11 @@ export const fetchContacts = async () => {
   return res.data;
 };
 
+export const fetchContactById = async (id: number) => {
+  const res = await api.get<Contact>(`/contact/${id}`);
+  return res.data;
+};
+
 export const createContact = async (
   data: Omit<Contact, "id" | "created_at" | "updated_at">
 ) => {
