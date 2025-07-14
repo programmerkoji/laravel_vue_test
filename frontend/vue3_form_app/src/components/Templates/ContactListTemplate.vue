@@ -8,12 +8,11 @@ const { contacts } = defineProps<{ contacts: Contact[] }>();
 <template>
   <BaseLayout title="お問い合わせ一覧">
     <div class="pt-4 mb-4 flex flex-wrap justify-between items-center gap-4">
-      <a
-        href="https://webjin.from-forties.net/admin/job_offers/create"
+      <RouterLink
+        to="/create"
         class="inline-block flex-shrink-0 px-8 py-2 text-base text-white bg-blue-600 rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-blue-200"
-        >新規登録</a
+        >新規登録</RouterLink
       >
-
       <div class="w-full md:w-1/3">
         <label
           for="default-search"
