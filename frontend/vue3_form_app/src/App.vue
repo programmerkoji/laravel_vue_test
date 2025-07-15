@@ -1,13 +1,14 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref } from "vue";
+import ContactProvider from "@/providers/ContactProvider.vue";
 
-const search = ref('')
+const search = ref("");
 </script>
 
 <template>
-  <router-view />
+  <ContactProvider>
+    <router-view />
+  </ContactProvider>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>
