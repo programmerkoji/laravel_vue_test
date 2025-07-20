@@ -5,7 +5,7 @@ import { onMounted, ref } from "vue";
 export const useContactProvider = () => {
   const contacts = ref<Contact[]>([]);
 
-  const showContactList = onMounted(async () => {
+  onMounted(async () => {
     try {
       contacts.value = await fetchContacts();
     } catch (error) {
@@ -15,6 +15,5 @@ export const useContactProvider = () => {
 
   return {
     contacts,
-    showContactList,
   };
 };

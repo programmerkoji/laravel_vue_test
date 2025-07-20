@@ -3,7 +3,7 @@ import { provide } from "vue";
 import { useContactProvider } from "../composables/useContactProvider";
 import { contactsInjectionKey } from "./ContactsProviderInjectionKey";
 
-const { contacts, showContactList } = useContactProvider();
+const { contacts } = useContactProvider();
 
 provide(contactsInjectionKey, contacts);
 </script>

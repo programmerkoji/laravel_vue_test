@@ -1,23 +1,22 @@
 <script lang="ts" setup>
-import { fetchContacts } from "@/api/contacts";
 import type { Contact } from "@/types/contact";
-import { onMounted } from "vue";
 import { ref } from "vue";
-import InputForm from "../components/Atoms/InputForm.vue";
 import ContactListTemplate from "@/components/Templates/ContactListTemplate.vue";
+import { fetchContacts } from "@/api/contacts";
+import { onMounted } from "vue";
+import { inject } from "vue";
+import { contactsInjectionKey } from "@/providers/ContactsProviderInjectionKey";
 
-const contacts = ref<Contact[]>([]);
+const contacts = inject(contactsInjectionKey);
 const searchWord = ref("");
 
 onMounted(async () => {
-  try {
+  if (contacts) {
     contacts.value = await fetchContacts();
-  } catch (error) {
-    console.error("Failed to fetch contacts:", error);
   }
 });
 </script>
 
 <template>
-  <ContactListTemplate :contacts="contacts" />
+  <ContactListTemplate />
 </template>
