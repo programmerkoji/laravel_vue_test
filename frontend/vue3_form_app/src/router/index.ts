@@ -9,12 +9,12 @@ const router = createRouter({
       component: () => import('../pages/ContactListPage.vue')
     },
     {
-      path: '/create',
+      path: '/contact',
       name: 'create',
       component: () => import('../pages/ContactCreatePage.vue')
     },
     {
-      path: '/create/:id',
+      path: '/contact/:id',
       name: 'detail',
       component: () => import('../pages/ContactDetailPage.vue')
     },

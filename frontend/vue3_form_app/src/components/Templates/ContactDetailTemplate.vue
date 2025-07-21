@@ -1,9 +1,13 @@
-<script lang="ts" setup>
+<script setup lang="ts">
 import BaseLayout from "@/components/Organisms/BaseLayout.vue";
+import { selectedContactInjectionKey } from "@/providers/ContactsProviderInjectionKey";
 import type { Contact } from "@/types/contact";
 import { formatDate } from "@/utils/dateFormat";
+import { ref } from "vue";
+import { inject } from "vue";
 
-const { contact } = defineProps<{ contact: Partial<Contact> }>();
+const selectedContact = inject(selectedContactInjectionKey, ref<Contact | null>(null));
+
 </script>
 
 <template>
@@ -15,32 +19,32 @@ const { contact } = defineProps<{ contact: Partial<Contact> }>();
         <li class="p-4">
           <dl class="flex items-center">
             <dt class="w-1/4 pl-1 font-bold">ID</dt>
-            <dd class="flex-auto">{{ contact.id }}</dd>
+            <dd class="flex-auto">{{ selectedContact?.id ?? "loading..." }}</dd>
           </dl>
         </li>
         <li class="p-4">
           <dl class="flex items-center">
             <dt class="w-1/4 pl-1 font-bold">お名前</dt>
-            <dd class="flex-auto">{{ contact.name }}</dd>
+            <dd class="flex-auto">{{ selectedContact ? selectedContact.name : "" }}</dd>
           </dl>
         </li>
         <li class="p-4">
           <dl class="flex items-center">
             <dt class="w-1/4 pl-1 font-bold">メールアドレス</dt>
-            <dd class="flex-auto">{{ contact.email }}</dd>
+            <dd class="flex-auto">{{ selectedContact ? selectedContact.email : "" }}</dd>
           </dl>
         </li>
         <li class="p-4">
           <dl class="flex items-center">
             <dt class="w-1/4 pl-1 font-bold">メッセージ</dt>
-            <dd class="flex-auto whitespace-pre-line">{{ contact.message || "" }}</dd>
+            <dd class="flex-auto whitespace-pre-line">{{ selectedContact ? selectedContact.message : "" }}</dd>
           </dl>
         </li>
         <li class="p-4">
           <dl class="flex items-center">
             <dt class="w-1/4 pl-1 font-bold">登録日</dt>
             <dd class="flex-auto">
-              {{ formatDate(contact.created_at || "") }}
+              {{ formatDate(selectedContact ? selectedContact.created_at : "") }}
             </dd>
           </dl>
         </li>
@@ -48,7 +52,7 @@ const { contact } = defineProps<{ contact: Partial<Contact> }>();
           <dl class="flex items-center">
             <dt class="w-1/4 pl-1 font-bold">更新日</dt>
             <dd class="flex-auto">
-              {{ formatDate(contact.updated_at || "") }}
+              {{ formatDate(selectedContact ? selectedContact.updated_at : "") }}
             </dd>
           </dl>
         </li>

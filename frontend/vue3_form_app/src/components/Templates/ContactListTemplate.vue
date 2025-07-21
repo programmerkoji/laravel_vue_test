@@ -8,7 +8,7 @@ import ContactList from "@/components/Organisms/ContactList.vue";
   <BaseLayout title="お問い合わせ一覧">
     <div class="pt-4 mb-4 flex flex-wrap justify-between items-center gap-4">
       <router-link
-        to="/create"
+        to="/contact"
         data-testid="new-button"
         class="inline-block flex-shrink-0 px-8 py-2 text-base text-white bg-blue-600 rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-blue-200"
         >新規登録</router-link
