@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { inject } from "vue";
-import { contactsInjectionKey } from "../../providers/ContactsProviderInjectionKey";
+import { useContactProvider } from "@/composables/useContactProvider";
 
-const contacts = inject(contactsInjectionKey);
+const { contacts } = useContactProvider();
 
 </script>
 

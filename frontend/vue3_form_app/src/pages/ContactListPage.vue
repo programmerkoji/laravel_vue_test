@@ -2,19 +2,12 @@
 import type { Contact } from "@/types/contact";
 import { ref } from "vue";
 import ContactListTemplate from "@/components/Templates/ContactListTemplate.vue";
-import { fetchContacts } from "@/api/contacts";
 import { onMounted } from "vue";
-import { inject } from "vue";
-import { contactsInjectionKey } from "@/providers/ContactsProviderInjectionKey";
+import { useContactProvider } from "@/composables/useContactProvider";
 
-const contacts = inject(contactsInjectionKey);
-const searchWord = ref("");
+const { fetchAllContacts } = useContactProvider();
 
-onMounted(async () => {
-  if (contacts) {
-    contacts.value = await fetchContacts();
-  }
-});
+onMounted(fetchAllContacts);
 </script>
 
 <template>

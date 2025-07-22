@@ -10,42 +10,18 @@ import { fetchContactDetailInjectionKey, selectedContactInjectionKey } from "@/p
 import { watch } from "vue";
 
 const route = useRoute();
-const selectedContact = inject(selectedContactInjectionKey, ref(null));
-const fetchContactDetail = inject(fetchContactDetailInjectionKey);
+const { fetchContactDetail } = useContactProvider();
 const isLoading = ref(true);
 
-watch(
-  () => route.params.id,
-  async (id) => {
-    isLoading.value = true;
-    if (!selectedContact) return;
-    try {
-      if (fetchContactDetail) {
-        await fetchContactDetail(Number(id));
-      }
-    } finally {
-      isLoading.value = false;
-    }
-  },
-  { immediate: true }
-);
+onMounted(() => {
+  const id = Number(route.params.id)
+  fetchContactDetail(id)
+});
 
 </script>
 
 <template>
-  <div class="loading" v-if="isLoading">
-    読み込み中...
-  </div>
-  <div v-else>
+  <div>
     <ContactDetailTemplate />
   </div>
 </template>
-
-<style scoped>
-.loading {
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-</style>
