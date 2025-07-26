@@ -2,7 +2,6 @@
 import { useContactProvider } from "@/composables/useContactProvider";
 
 const { contacts } = useContactProvider();
-
 </script>
 
 <template>
@@ -72,10 +71,10 @@ const { contacts } = useContactProvider();
               class="py-1 px-2 border border-indigo-600 rounded-full text-indigo-600 hover:text-indigo-900"
               >詳細</router-link
             >
-            <a
-              href="https://webjin.from-forties.net/admin/job_offers/24/edit"
+            <router-link
+              :to="{ name: 'update', params: { id: contact.id } }"
               class="py-1 px-2 border border-green-600 rounded-full text-green-600 hover:text-green-900"
-              >編集</a
+              >編集</router-link
             >
             <form
               id="delete_24"

@@ -18,6 +18,11 @@ const router = createRouter({
       name: 'detail',
       component: () => import('../pages/ContactDetailPage.vue')
     },
+    {
+      path: '/contact/update/:id',
+      name: 'update',
+      component: () => import('../pages/ContactUpdatePage.vue')
+    },
   ]
 })
 

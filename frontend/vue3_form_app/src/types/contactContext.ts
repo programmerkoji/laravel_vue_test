@@ -5,6 +5,9 @@ export interface ContactContext {
   contacts: Ref<Contact[]>;
   selectedContact: Ref<Contact | null>;
   fetchAllContacts: () => Promise<void>;
-  fetchContactDetail: (id: number) => Promise<void>;
-  addContact: (data:  Omit<Contact, "id" | "created_at" | "updated_at">) => Promise<string>;
+  fetchContactDetail: (id: number) => Promise<Contact>;
+  editContact: (
+    id: number,
+    data: Omit<Contact, "created_at" | "updated_at">
+  ) => Promise<string>;
 }

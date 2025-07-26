@@ -3,23 +3,38 @@ import { useContactProvider } from "@/composables/useContactProvider";
 import type { Contact } from "@/types/contact";
 import axios from "axios";
 import { ref } from "vue";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import InputForm from "../Atoms/InputForm.vue";
 import TextareaForm from "../Atoms/TextareaForm.vue";
 import CommonButton from "@/components/Atoms/CommonButton.vue";
+import { onMounted } from "vue";
 
-const form = ref<Partial<Contact>>({
+const form = ref<Contact>({
+  id: 0,
   name: "",
   email: "",
   message: "",
+  status: "",
+  created_at: "",
+  updated_at: "",
 });
 
 const router = useRouter();
-const { addContact } = useContactProvider();
+const { editContact, fetchContactDetail } = useContactProvider();
+
+const route = useRoute();
+const id = route.params.id ? String(route.params.id) : null;
+const buttonLabel = id ? "更新" : "登録";
+
+onMounted(async () => {
+  if (id) {
+    form.value = await fetchContactDetail(Number(id));
+  }
+});
 
 const handleSubmit = async () => {
   try {
-    const message = await addContact(form.value as Required<typeof form.value>); //すべてのプロパティが存在している（undefined ではない）と伝える
+    const message = await editContact(Number(id), form.value);
     alert(message);
     router.push("/");
   } catch (error: unknown) {
@@ -73,7 +88,7 @@ const handleSubmit = async () => {
         class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
         >戻る</router-link
       >
-      <CommonButton type="submit" label="登録" />
+      <CommonButton type="submit" :label="buttonLabel" />
     </div>
   </form>
 </template>

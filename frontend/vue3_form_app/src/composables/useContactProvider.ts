@@ -1,4 +1,9 @@
-import { createContact, fetchContactById, fetchContacts } from "@/api/contacts";
+import {
+  createContact,
+  fetchContactById,
+  fetchContacts,
+  updateContact,
+} from "@/api/contacts";
 import type { Contact } from "@/types/contact";
 import type { ContactContext } from "@/types/contactContext";
 import { inject, provide, ref, type InjectionKey } from "vue";
@@ -11,13 +16,21 @@ const fetchAllContacts = async () => {
 };
 
 const fetchContactDetail = async (id: number) => {
-  selectedContact.value = await fetchContactById(id);
+  const contact = await fetchContactById(id);
+  selectedContact.value = contact;
+  return contact;
 };
 
-const addContact = async (
-  data: Omit<Contact, "id" | "created_at" | "updated_at">
+const editContact = async (
+  id: number | null,
+  data: Omit<Contact, "created_at" | "updated_at">
 ) => {
-  const message = await createContact(data);
+  let message;
+  if (id) {
+    message = await updateContact(id, data);
+  } else {
+    message = await createContact(data);
+  }
   await fetchAllContacts();
   return message;
 };
@@ -32,7 +45,7 @@ export const provideContact = () => {
     selectedContact,
     fetchAllContacts,
     fetchContactDetail,
-    addContact,
+    editContact,
   });
 };
 
