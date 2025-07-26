@@ -33,6 +33,8 @@ describe("ContactList.vue", () => {
     selectedContact: ref(null),
     fetchAllContacts: vi.fn(),
     fetchContactDetail: vi.fn(),
+    editContact: vi.fn(),
+    delContact: vi.fn(),
   };
 
   it("contactsをinjectしてリストを表示する", () => {

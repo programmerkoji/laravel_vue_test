@@ -1,7 +1,22 @@
 <script setup lang="ts">
 import { useContactProvider } from "@/composables/useContactProvider";
+import axios from "axios";
 
-const { contacts } = useContactProvider();
+const { contacts, delContact } = useContactProvider();
+const handleDelete = async (id: number) => {
+  if (!window.confirm("本当に削除しますか？")) return;
+  try {
+    const message = await delContact(id);
+    if (message) {
+      alert(message);
+    }
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      alert("登録に失敗しました");
+      console.error(error.response?.data.errors.email);
+    }
+  }
+};
 </script>
 
 <template>
@@ -76,25 +91,15 @@ const { contacts } = useContactProvider();
               class="py-1 px-2 border border-green-600 rounded-full text-green-600 hover:text-green-900"
               >編集</router-link
             >
-            <form
-              id="delete_24"
-              action="https://webjin.from-forties.net/admin/job_offers/24"
-              method="post"
-            >
-              <input
-                type="hidden"
-                name="_token"
-                value="bpbUmGWhapQUfRX7MoReXC6zV25LmRAENzhjfaw0"
-              />
-              <input type="hidden" name="_method" value="delete" />
-              <a
-                href="#"
-                data-id="24"
-                onclick="deletePost(this)"
+            <div>
+              <button
+                type="button"
+                @click="handleDelete(Number(contact.id))"
                 class="py-1 px-2 border border-red-600 rounded-full text-red-600 hover:text-red-900"
-                >削除</a
               >
-            </form>
+                削除
+              </button>
+            </div>
           </div>
         </td>
       </tr>

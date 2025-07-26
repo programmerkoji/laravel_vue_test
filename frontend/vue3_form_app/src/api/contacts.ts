@@ -25,3 +25,8 @@ export const updateContact = async (
   const res = await api.put<Contact>(`/contact/${id}`, data);
   return res.data.message;
 };
+
+export const deleteContact = async (id: number) => {
+  const res = await api.delete<Contact>(`/contact/${id}`);
+  return res.data.message;
+};

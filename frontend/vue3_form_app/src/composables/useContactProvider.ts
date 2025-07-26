@@ -1,5 +1,6 @@
 import {
   createContact,
+  deleteContact,
   fetchContactById,
   fetchContacts,
   updateContact,
@@ -35,6 +36,12 @@ const editContact = async (
   return message;
 };
 
+const delContact = async (id: number) => {
+  const message = await deleteContact(id);
+  await fetchAllContacts();
+  return message;
+};
+
 // Infection Key
 export const contactInjectionKey: InjectionKey<ContactContext> =
   Symbol("ContactProvider");
@@ -46,6 +53,7 @@ export const provideContact = () => {
     fetchAllContacts,
     fetchContactDetail,
     editContact,
+    delContact,
   });
 };
 

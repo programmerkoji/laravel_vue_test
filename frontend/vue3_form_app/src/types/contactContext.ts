@@ -10,4 +10,5 @@ export interface ContactContext {
     id: number,
     data: Omit<Contact, "created_at" | "updated_at">
   ) => Promise<string>;
+  delContact: (id: number) => Promise<string | null>;
 }
