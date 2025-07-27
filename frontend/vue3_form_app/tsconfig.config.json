@@ -1,5 +1,4 @@
 {
-  "extends": "@vue/tsconfig/tsconfig.node.json",
   "include": [
     "vite.config.*",
     "vitest.config.*",
@@ -12,6 +11,13 @@
     "composite": true,
     "types": ["node"],
     "verbatimModuleSyntax": true,
-    "ignoreDeprecations": "5.0"
+    "ignoreDeprecations": "5.0",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "preserve"
   }
 }
