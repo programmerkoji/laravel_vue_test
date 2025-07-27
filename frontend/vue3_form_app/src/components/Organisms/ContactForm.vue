@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import { useContactProvider } from "@/composables/useContactProvider";
 import type { Contact } from "@/types/contact";
+import CommonButton from "@/components/Atoms/CommonButton.vue";
+import LabelWithInput from "@/components/Molecules/LabelWithInput.vue";
+import LabelWithTextarea from "@/components/Molecules/LabelWithTextarea.vue";
 import axios from "axios";
 import { ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import InputForm from "../Atoms/InputForm.vue";
 import TextareaForm from "../Atoms/TextareaForm.vue";
-import CommonButton from "@/components/Atoms/CommonButton.vue";
 import { onMounted } from "vue";
 
 const form = ref<Contact>({
@@ -51,36 +53,28 @@ const handleSubmit = async () => {
 <template>
   <form class="w-full divide divide-y" @submit.prevent="handleSubmit">
     <div class="p-4">
-      <label class="flex items-center">
-        <span class="w-1/4 pl-1 font-bold">お名前</span>
-        <span class="flex-auto">
-          <InputForm name="name" placeholder="お名前" v-model="form.name" />
-        </span>
-      </label>
+      <LabelWithInput
+        label="お名前"
+        name="name"
+        placeholder="山田　太郎"
+        v-model="form.name"
+      />
     </div>
     <div class="p-4">
-      <label class="flex items-center">
-        <span class="w-1/4 pl-1 font-bold">メールアドレス</span>
-        <span class="flex-auto">
-          <InputForm
-            name="name"
-            placeholder="メールアドレス"
-            v-model="form.email"
-          />
-        </span>
-      </label>
+      <LabelWithInput
+        label="メールアドレス"
+        name="email"
+        placeholder="yamada@test.com"
+        v-model="form.email"
+      />
     </div>
     <div class="p-4">
-      <label class="flex items-center">
-        <span class="w-1/4 pl-1 font-bold">メッセージ</span>
-        <span class="flex-auto">
-          <TextareaForm
-            name="name"
-            placeholder="メッセージ"
-            v-model="form.message"
-          />
-        </span>
-      </label>
+      <LabelWithTextarea
+        label="お問い合わせ内容"
+        name="message"
+        placeholder="ご要望・ご相談をご記入ください"
+        v-model="form.message"
+      />
     </div>
     <div class="flex justify-center items-center gap-6 py-10">
       <router-link
