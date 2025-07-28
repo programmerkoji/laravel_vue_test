@@ -7,8 +7,6 @@ import LabelWithTextarea from "@/components/Molecules/LabelWithTextarea.vue";
 import axios from "axios";
 import { ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import InputForm from "../Atoms/InputForm.vue";
-import TextareaForm from "../Atoms/TextareaForm.vue";
 import { onMounted } from "vue";
 
 const form = ref<Contact>({
@@ -56,7 +54,7 @@ const handleSubmit = async () => {
       <LabelWithInput
         label="お名前"
         name="name"
-        placeholder="山田　太郎"
+        placeholder="山田 太郎"
         v-model="form.name"
       />
     </div>

@@ -20,7 +20,8 @@ const handleDelete = async (id: number) => {
 </script>
 
 <template>
-  <table class="min-w-full leading-normal">
+  <p v-if="!contacts || contacts.length === 0">データがありません</p>
+  <table v-else class="min-w-full leading-normal">
     <thead>
       <tr>
         <th
