@@ -6,6 +6,10 @@
     "lib": [],
     "types": ["node", "jsdom"],
     "verbatimModuleSyntax": true,
-    "ignoreDeprecations": "5.0"
+    "ignoreDeprecations": "5.0",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
   }
 }

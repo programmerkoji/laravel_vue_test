@@ -29,7 +29,6 @@ defineEmits<Emits>();
 </template>
 
 <style scoped>
-
 .input:disabled {
   color: #c0c0c0;
 }

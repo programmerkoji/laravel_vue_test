@@ -1,4 +1,4 @@
-import type { Contact } from "@/types/contact";
+import type { Contact } from "@/types/contact.ts";
 import { mount } from "@vue/test-utils";
 import { describe, expect, it, vi } from "vitest";
 import ContactListVue from "@/components/Organisms/ContactList.vue";
