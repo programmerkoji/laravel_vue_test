@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useContactProvider } from "@/composables/useContactProvider";
+import { useCounterStore } from "@/stores/couter";
 import axios from "axios";
 
 const { contacts, delContact } = useContactProvider();
@@ -17,9 +18,42 @@ const handleDelete = async (id: number) => {
     }
   }
 };
+
+const counter = useCounterStore();
+
+const increment = () => {
+  counter.increment();
+};
+const decrement = () => {
+  counter.decrement();
+};
+const reset = () => {
+  counter.reset();
+};
 </script>
 
 <template>
+  <div class="flex items-center gap-4">
+    <button
+      @click="increment"
+      class="py-1 px-2 border border-indigo-600 rounded-full text-indigo-600 hover:text-indigo-900"
+    >
+      +
+    </button>
+    <button
+      @click="decrement"
+      class="py-1 px-2 border border-indigo-600 rounded-full text-indigo-600 hover:text-indigo-900"
+    >
+      -
+    </button>
+    <button
+      @click="reset"
+      class="py-1 px-2 border border-indigo-600 rounded-full text-indigo-600 hover:text-indigo-900"
+    >
+      reset
+    </button>
+    <p>{{ counter.count }}</p>
+  </div>
   <p v-if="!contacts || contacts.length === 0">データがありません</p>
   <table v-else class="min-w-full leading-normal">
     <thead>
