@@ -30,7 +30,9 @@ class ContactController extends Controller
 
         try {
             $contact = $this->service->create($validated);
-            return response()->json($contact, 201);
+            return response()->json([
+                'message' => '登録が完了しました！'
+            ], 201);
         } catch (\Exception $e) {
             return response()->json([
                 'error' => '登録処理中にエラーが発生しました。',
@@ -50,7 +52,9 @@ class ContactController extends Controller
 
         try {
             $contact = $this->service->update($id, $validated);
-            return response()->json($contact, 201);
+            return response()->json([
+                'message' => '更新が完了しました！'
+            ], 201);
         } catch (\Exception $e) {
             return response()->json([
                 'error' => '登録処理中にエラーが発生しました。',
