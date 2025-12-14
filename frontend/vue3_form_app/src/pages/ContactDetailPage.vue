@@ -1,17 +1,16 @@
 <script setup lang="ts">
-import { useContactProvider } from "@/composables/useContactProvider";
 import ContactDetailTemplate from "@/components/Templates/ContactDetailTemplate.vue";
 import { onMounted } from "vue";
 import { useRoute } from "vue-router";
+import { useContactStore } from "@/stores/ContactStore";
 
 const route = useRoute();
-const { fetchContactDetail } = useContactProvider();
+const contactStore = useContactStore();
 
 onMounted(() => {
-  const id = Number(route.params.id)
-  fetchContactDetail(id)
+  const id = Number(route.params.id);
+  contactStore.fetchContactDetail(id);
 });
-
 </script>
 
 <template>

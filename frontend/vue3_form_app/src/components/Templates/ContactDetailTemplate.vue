@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import BaseLayout from "@/components/Organisms/BaseLayout.vue";
-import { useContactProvider } from "@/composables/useContactProvider";
 import { formatDate } from "@/utils/dateFormat";
+import { storeToRefs } from "pinia";
+import { useContactStore } from "@/stores/ContactStore";
 
-const { selectedContact } = useContactProvider();
+const contactStore = useContactStore();
+const { selectedContact } = storeToRefs(contactStore);
 </script>
 
 <template>

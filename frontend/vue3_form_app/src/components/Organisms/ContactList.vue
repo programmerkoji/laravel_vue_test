@@ -1,12 +1,15 @@
 <script setup lang="ts">
-import { useContactProvider } from "@/composables/useContactProvider";
 import axios from "axios";
+import { storeToRefs } from "pinia";
+import { useContactStore } from "@/stores/ContactStore";
 
-const { contacts, delContact } = useContactProvider();
+const contactStore = useContactStore();
+const { contacts } = storeToRefs(contactStore);
+
 const handleDelete = async (id: number) => {
   if (!window.confirm("本当に削除しますか？")) return;
   try {
-    const message = await delContact(id);
+    const message = await contactStore.delContact(id);
     if (message) {
       alert(message);
     }

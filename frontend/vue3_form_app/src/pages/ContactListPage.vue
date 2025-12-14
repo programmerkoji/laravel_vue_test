@@ -1,13 +1,11 @@
 <script lang="ts" setup>
-import type { Contact } from "@/types/contact";
-import { ref } from "vue";
 import ContactListTemplate from "@/components/Templates/ContactListTemplate.vue";
 import { onMounted } from "vue";
-import { useContactProvider } from "@/composables/useContactProvider";
+import { useContactStore } from "@/stores/ContactStore";
 
-const { fetchAllContacts } = useContactProvider();
+const contactStore = useContactStore();
 
-onMounted(fetchAllContacts);
+onMounted(contactStore.fetchAllContacts);
 </script>
 
 <template>

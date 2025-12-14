@@ -1,10 +1,10 @@
 import type { Contact } from "@/types/contact.ts";
-import { mount } from "@vue/test-utils";
+import { flushPromises, mount, RouterLinkStub } from "@vue/test-utils";
+import { createPinia, setActivePinia } from "pinia";
 import { describe, expect, it, vi } from "vitest";
 import ContactListVue from "@/components/Organisms/ContactList.vue";
-import type { ContactContext } from "@/types/contactContext";
 import { ref } from "vue";
-import { contactInjectionKey } from "@/composables/useContactProvider";
+import { useContactStore } from "@/stores/ContactStore";
 
 describe("ContactList.vue", () => {
   const mockContacts = ref<Contact[]>([
@@ -28,27 +28,15 @@ describe("ContactList.vue", () => {
     },
   ]);
 
-  const mockProvider: ContactContext = {
-    contacts: mockContacts,
-    selectedContact: ref(null),
-    fetchAllContacts: vi.fn(),
-    fetchContactDetail: vi.fn(),
-    editContact: vi.fn(),
-    delContact: vi.fn(),
-  };
-
-  const RouterLinkStub = {
-    name: "router-link",
-    props: ["to"],
-    template: "<a><slot /></a>",
-  };
-
   it("contactsをinjectしてリストを表示する", () => {
+    const pinia = createPinia();
+    setActivePinia(pinia);
+    const contactStore = useContactStore();
+    contactStore.contacts = mockContacts.value;
+
     const wrapper = mount(ContactListVue, {
       global: {
-        provide: {
-          [contactInjectionKey]: mockProvider,
-        },
+        plugins: [pinia],
         stubs: ["router-link"],
       },
     });
@@ -64,18 +52,21 @@ describe("ContactList.vue", () => {
   });
 
   it("各行の詳細・編集リンクが正しく表示されている", async () => {
+    const pinia = createPinia();
+    setActivePinia(pinia);
+    const contactStore = useContactStore();
+    contactStore.contacts = mockContacts.value;
+
     const wrapper = mount(ContactListVue, {
       global: {
-        provide: {
-          [contactInjectionKey]: mockProvider,
-        },
+        plugins: [pinia],
         stubs: {
           RouterLink: RouterLinkStub,
         },
       },
     });
     const rows = wrapper.findAll("tbody tr");
-    const routerLinks = rows[0].findAllComponents({ name: "router-link" });
+    const routerLinks = rows[0].findAllComponents(RouterLinkStub);
     expect(routerLinks.length).toBe(2);
 
     // 詳細リンク
@@ -93,27 +84,36 @@ describe("ContactList.vue", () => {
   it("削除ボタンがクリックされたときにdeleteContactが呼ばれる", async () => {
     // winows.confirmをモック
     window.confirm = vi.fn(() => true);
+    window.alert = vi.fn();
+
+    const pinia = createPinia();
+    setActivePinia(pinia);
+    const contactStore = useContactStore();
+    contactStore.contacts = mockContacts.value;
+    const delSpy = vi.spyOn(contactStore, "delContact").mockResolvedValue("OK");
+
     const wrapper = mount(ContactListVue, {
       global: {
-        provide: {
-          [contactInjectionKey]: mockProvider,
-        },
+        plugins: [pinia],
         stubs: ["router-link"],
       },
     });
     const rows = wrapper.findAll("tbody tr");
     const deleteButton = rows[0].find("button");
     await deleteButton.trigger("click");
-    expect(mockProvider.delContact).toHaveBeenCalledWith(1);
+    await flushPromises();
+    expect(delSpy).toHaveBeenCalledWith(1);
   });
 
   it("contactsが空の場合に適切なメッセージが表示される", () => {
-    const emptyProvider = { ...mockProvider, contacts: [] };
+    const pinia = createPinia();
+    setActivePinia(pinia);
+    const contactStore = useContactStore();
+    contactStore.contacts = [];
+
     const wrapper = mount(ContactListVue, {
       global: {
-        provide: {
-          [contactInjectionKey]: emptyProvider,
-        },
+        plugins: [pinia],
         stubs: ["router-link"],
       },
     });

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useContactProvider } from "@/composables/useContactProvider";
 import type { Contact } from "@/types/contact";
 import CommonButton from "@/components/Atoms/CommonButton.vue";
 import LabelWithInput from "@/components/Molecules/LabelWithInput.vue";
@@ -8,6 +7,7 @@ import axios from "axios";
 import { ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { onMounted } from "vue";
+import { useContactStore } from "@/stores/ContactStore";
 
 const form = ref<Contact>({
   id: 0,
@@ -20,21 +20,21 @@ const form = ref<Contact>({
 });
 
 const router = useRouter();
-const { editContact, fetchContactDetail } = useContactProvider();
+const contactStore = useContactStore();
 
 const route = useRoute();
-const id = route.params.id ? String(route.params.id) : null;
-const buttonLabel = id ? "更新" : "登録";
+const id = route.params.id ? Number(route.params.id) : null;
+const buttonLabel = id != null ? "更新" : "登録";
 
 onMounted(async () => {
-  if (id) {
-    form.value = await fetchContactDetail(Number(id));
+  if (id != null) {
+    form.value = await contactStore.fetchContactDetail(id);
   }
 });
 
 const handleSubmit = async () => {
   try {
-    const message = await editContact(Number(id), form.value);
+    const message = await contactStore.editContact(id, form.value);
     alert(message);
     router.push("/");
   } catch (error: unknown) {

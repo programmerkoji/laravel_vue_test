@@ -7,8 +7,8 @@ export interface ContactContext {
   fetchAllContacts: () => Promise<void>;
   fetchContactDetail: (id: number) => Promise<Contact>;
   editContact: (
-    id: number,
+    id: number | null,
     data: Omit<Contact, "created_at" | "updated_at">
   ) => Promise<string>;
-  delContact: (id: number) => Promise<string | null>;
+  delContact: (id: number) => Promise<string>;
 }

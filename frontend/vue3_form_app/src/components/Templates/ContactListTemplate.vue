@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import BaseLayout from "../Organisms/BaseLayout.vue";
 import ContactList from "@/components/Organisms/ContactList.vue";
-
 </script>
 
 <template>
