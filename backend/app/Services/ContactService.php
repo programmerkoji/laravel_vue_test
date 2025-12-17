@@ -1,8 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services;
 
+use App\Models\Contact;
 use App\Repositories\Interfaces\ContactRepositoryInterface;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -12,17 +16,17 @@ class ContactService
         protected ContactRepositoryInterface $contactRepository
     ) {}
 
-    public function getAll()
+    public function getAll(): Collection
     {
         return $this->contactRepository->all();
     }
 
-    public function getById(int $id)
+    public function getById(int $id): Contact
     {
         return $this->contactRepository->find($id);
     }
 
-    public function create(array $data)
+    public function create(array $data): Contact
     {
         DB::beginTransaction();
 
@@ -37,7 +41,7 @@ class ContactService
         }
     }
 
-    public function update(int $id, array $data)
+    public function update(int $id, array $data): Contact
     {
         DB::beginTransaction();
 
@@ -52,7 +56,7 @@ class ContactService
         }
     }
 
-    public function delete(int $id)
+    public function delete(int $id): bool
     {
         return $this->contactRepository->delete($id);
     }

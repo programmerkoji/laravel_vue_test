@@ -1,26 +1,31 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Services\ContactService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class ContactController extends Controller
 {
-    public function __construct(protected ContactService $service) {}
+    public function __construct(
+        protected ContactService $service
+    ) {}
 
-    public function index()
+    public function index(): JsonResponse
     {
         return response()->json($this->service->getAll());
     }
 
-    public function show($id)
+    public function show(int $id): JsonResponse
     {
         return response()->json($this->service->getById($id));
     }
 
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse
     {
         $validated = $request->validate([
             'name' => 'required',
@@ -29,7 +34,7 @@ class ContactController extends Controller
         ]);
 
         try {
-            $contact = $this->service->create($validated);
+            $this->service->create($validated);
             return response()->json([
                 'message' => '登録が完了しました！'
             ], 201);
@@ -39,10 +44,9 @@ class ContactController extends Controller
                 'message' => $e->getMessage()
             ], 500);
         }
-
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, int $id): JsonResponse
     {
         $validated = $request->validate([
             'name' => 'required',
@@ -61,10 +65,9 @@ class ContactController extends Controller
                 'message' => $e->getMessage()
             ], 500);
         }
-
     }
 
-    public function destroy($id)
+    public function destroy(int $id): JsonResponse
     {
         $this->service->delete($id);
         return response()->json(['message' => '削除しました']);
